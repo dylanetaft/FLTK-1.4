@@ -224,7 +224,7 @@ public:
     once, in which case only the last one shown gets events.  You can see
     which window (if any) is modal by calling Fl::modal().
   */
-  void set_modal()	{set_flag(MODAL);set_flag(SKIP_TASKBAR);}
+  void set_modal()	{set_flag(MODAL);}
   /**  Returns true if this window is modal.  */
   unsigned int modal() const	{return flags() & MODAL;}
   /**
