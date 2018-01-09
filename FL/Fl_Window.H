@@ -185,6 +185,19 @@ public:
   */
   virtual void resize(int X,int Y,int W,int H);
   /**
+    Sets whether or not the window will skip the taskbar.
+    The default value is not to skip.  Under many window managers,
+    this will not work after show() has been called.  Certain
+    windows, "modal" windows, or "clear_border" windows, by
+    default will not show in the taskbar.  Call this method
+    after defining the window type to override this behavior.
+    This is also dependent on the windowing driver supporting
+    the behavior, and on underlying OS support.
+  */
+  void skip_taskbar(int t);
+  //* Returns non zero if SKIP_TASKBAR is set
+  unsigned int skip_taskbar() const {return (flags() & SKIP_TASKBAR);}
+  /**
     Sets whether or not the window manager border is around the
     window.  The default value is true. void border(int) can be
     used to turn the border on and off. <I>Under most X window
@@ -196,7 +209,7 @@ public:
     Fast inline function to turn the window manager border
     off. It only works before show() is called.
   */
-  void clear_border()	{set_flag(NOBORDER);}
+  void clear_border()	{set_flag(NOBORDER);set_flag(SKIP_TASKBAR);}
   /** See void Fl_Window::border(int) */
   unsigned int border() const	{return !(flags() & NOBORDER);}
   /** Activates the flags NOBORDER|FL_OVERRIDE */
@@ -211,7 +224,7 @@ public:
     once, in which case only the last one shown gets events.  You can see
     which window (if any) is modal by calling Fl::modal().
   */
-  void set_modal()	{set_flag(MODAL);}
+  void set_modal()	{set_flag(MODAL);set_flag(SKIP_TASKBAR);}
   /**  Returns true if this window is modal.  */
   unsigned int modal() const	{return flags() & MODAL;}
   /**
